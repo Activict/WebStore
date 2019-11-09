@@ -6,7 +6,12 @@
 
 <h2>Pages</h2>
 
- 
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SM"]
+    </div>
+}
 
 <p>
     @Html.ActionLink("Create New Page", "AddPage", "Pages", new { @class = "btn btn-success" })
@@ -38,7 +43,7 @@ else
         {
             <tr id="id_@item.Id" class="@item.Slug">
                 <td>
-                    @if (item.Slug != "home") 
+                    @if (item.Slug != "home")
                     {
                         <span class="ui-icon ui-icon-arrow-2-n-s">   </span>
                     }

@@ -21,12 +21,14 @@ namespace WebStore.Areas.Admin.Controllers
 
             return View(pageList);
         }
+
         // GET: Admin/Pages/AddPage
         [HttpGet]
         public ActionResult AddPage()
         {
             return View();
         }
+
         // POST: Admin/Pages/AddPage
         [HttpPost]
         public ActionResult AddPage(PageVM model)
@@ -81,6 +83,7 @@ namespace WebStore.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
         // GET: Admin/Pages/PageDetails
         public ActionResult PageDetails(int id)
         {
@@ -98,6 +101,7 @@ namespace WebStore.Areas.Admin.Controllers
             }
             return View(model);
         }
+
         // GET: Admin/Pages/EditPage
         [HttpGet]
         public ActionResult EditPage(int id)
@@ -118,6 +122,7 @@ namespace WebStore.Areas.Admin.Controllers
 
             return View(model);
         }
+
         // POST: Admin/Pages/EditPage
         [HttpPost]
         public ActionResult EditPage(PageVM model)
@@ -169,6 +174,7 @@ namespace WebStore.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
         // GET: Admin/Pages/DeletePage/id
         public ActionResult DeletePage(int id)
         {
@@ -183,6 +189,7 @@ namespace WebStore.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
         // POST: /Admin/Pages/RecorderPages
         [HttpPost]
         public void RecorderPages(int[] id)
