@@ -1,0 +1,93 @@
+﻿@model IEnumerable<WebStore.Models.ViewModels.Pages.PageVM>
+
+@{
+    ViewBag.Title = "Pages";
+}
+
+<h2>Pages</h2>
+
+ 
+
+<p>
+    @Html.ActionLink("Create New Page", "AddPage", "Pages", new { @class = "btn btn-success" })
+</p>
+
+@if (!Model.Any())
+{
+    <h1 class="text-center">
+        There are not pages
+    </h1>
+}
+else
+{
+    <table class="table sorting" id="pages">
+        <tr class="home">
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasSidebar)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.Id" class="@item.Slug">
+                <td>
+                    @if (item.Slug != "home") 
+                    {
+                        <span class="ui-icon ui-icon-arrow-2-n-s">   </span>
+                    }
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasSidebar)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "PageDetails", new { id = item.Id })
+                    @if (item.Slug != "home")
+                    {
+                        string slash = "| ";
+                        @slash
+                        @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "delete" })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("a.delete").click(function () {
+                if (!confirm("Confirm page deletion")) return false;
+            });
+
+            /* Sorting script */
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Pages/RecorderPages";
+
+                    $.post(url, ids, function (data) {
+
+                    });
+                }
+            });
+        });
+    </script>
+}
