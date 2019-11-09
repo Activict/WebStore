@@ -90,5 +90,30 @@ namespace WebStore.Areas.Admin.Controllers
 
             return RedirectToAction("Categories");
         }
+
+        // POST: Admin/Shop/RenameCategory/id
+        [HttpPost]
+        public string RenameCategory(string newCatName, int id)
+        {
+            using (Db db = new Db())
+            {
+                if (db.Categories.Any(m=> m.Name == newCatName))
+                {
+                    return "titletaken";
+                }
+                else
+                {
+                    CategoryDTO dto = db.Categories.Find(id);
+                    
+                    dto.Name = newCatName;
+                    dto.Slug = newCatName.Replace(" ", "-").ToLower();
+
+                    db.SaveChanges();
+                }
+            }
+            return "";
+        }
+
+
     }
 }
