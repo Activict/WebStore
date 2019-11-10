@@ -397,5 +397,26 @@ namespace WebStore.Areas.Admin.Controllers
         }
 
 
+        // POST: Admin/Shop/DeleteProduct
+        public ActionResult DeleteProduct(int id)
+        {
+            using (Db db = new Db())
+            {
+                ProductDTO dto = db.Products.Find(id);
+                db.Products.Remove(dto);
+
+                db.SaveChanges();
+            }
+            // del directory image
+            var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
+            var pathString = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+
+            if (Directory.Exists(pathString))
+            {
+                Directory.Delete(pathString, true);
+            }
+
+            return RedirectToAction("Products");
+        }
     }
 }
