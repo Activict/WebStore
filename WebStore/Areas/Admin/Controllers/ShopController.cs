@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -240,5 +241,28 @@ namespace WebStore.Areas.Admin.Controllers
             return RedirectToAction("AddProduct");
         }
 
+        // POST: Admin/Shop/Products
+        [HttpGet]
+        public ActionResult Products(int? page, int? catId)
+        {
+            List<ProductVM> listOfProductVM;
+            var pageNmber = page ?? 1;
+
+            using (Db db = new Db())
+            {
+                listOfProductVM = db.Products.ToArray()
+                    .Where(m => catId == null || catId == 0 || m.CategoryId == catId)
+                    .Select(m => new ProductVM(m))
+                    .ToList();
+                // передаем все категории
+                ViewBag.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                // передавем выбранную категорию
+                ViewBag.SelectedCat = catId.ToString();
+            }
+            // постраничная навигация, кол-во продуктов на странице
+            ViewBag.OnePageOfProducts = listOfProductVM.ToPagedList(pageNmber, 3);
+
+            return View(listOfProductVM);
+        }
     }
 }
