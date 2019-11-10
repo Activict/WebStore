@@ -175,7 +175,7 @@ namespace WebStore.Areas.Admin.Controllers
 
             TempData["SM"] = "You have added a product.";
 
-            #region Upload Image
+#region Upload Image
             var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
             var pathString1 = Path.Combine(originalDirectory.ToString(), "Products");
             var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
@@ -264,5 +264,138 @@ namespace WebStore.Areas.Admin.Controllers
 
             return View(listOfProductVM);
         }
+
+        // GET: Admin/Shop/EditProduct
+        [HttpGet]
+        public ActionResult EditProduct(int id)
+        {
+            ProductVM model;
+            using (Db db = new Db())
+            {
+                ProductDTO dto = db.Products.Find(id);
+                
+                if (dto == null)
+                {
+                    return Content("That product does not exist.");
+                }
+
+                model = new ProductVM(dto);
+                model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+                model.GalleryImages = Directory
+                    .EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                    .Select(fn => Path.GetFileName(fn));
+            }
+
+            return View(model);
+        }
+
+        // POST: Admin/Shop/EditProduct
+        [HttpPost]
+        public ActionResult EditProduct(ProductVM model, HttpPostedFileBase file)
+        {
+            int id = model.Id;
+
+            using (Db db = new Db())
+            {
+                model.Categories = new SelectList(db.Categories.ToList(), "Id", "Name");
+            }
+
+            model.GalleryImages = Directory
+                    .EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                    .Select(fn => Path.GetFileName(fn));
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            //Проверяем имя продукта на уникальность
+            using (Db db = new Db())
+            {
+                if (db.Products.Where(m => m.Id != id).Any(m => m.Name == model.Name))
+                {
+                    ModelState.AddModelError("", "That product name is taken.");
+                    return View(model);
+                }
+            }
+            // Обновляем продукт
+            using (Db db = new Db())
+            {
+                ProductDTO dto = db.Products.Find(id);
+
+                dto.Name = model.Name;
+                dto.Slug = model.Name.Replace(" ", "-").ToLower();
+                dto.Description = model.Description;
+                dto.Price = model.Price;
+                dto.CategoryId = model.CategoryId;
+                dto.ImageName = model.ImageName;
+
+                CategoryDTO catDTO = db.Categories.FirstOrDefault(m => m.Id == model.CategoryId);
+                dto.Category = catDTO;
+
+                db.SaveChanges();
+            }
+
+            TempData["SM"] = "You have edited the product.";
+
+            #region Image Upload
+            if (file != null && file.ContentLength > 0)
+            {
+                string ext = file.ContentType.ToLower();
+
+                if (ext != "image/jpg" &&
+                    ext != "image/jpeg" &&
+                    ext != "image/pjpg" &&
+                    ext != "image/gif" &&
+                    ext != "image/x-png" &&
+                    ext != "image/png")
+                {
+                    using (Db db = new Db())
+                    {
+                        ModelState.AddModelError("", "The image was not uploaded - wrong image extension");
+                        return View(model);
+                    }
+                }
+
+                var originalDirectory = new DirectoryInfo(string.Format($"{Server.MapPath(@"\")}Images\\Uploads"));
+                var pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+                var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+
+                DirectoryInfo di1 = new DirectoryInfo(pathString1);
+                DirectoryInfo di2 = new DirectoryInfo(pathString2);
+
+                foreach (var file2 in di1.GetFiles())
+                {
+                    file2.Delete();
+                }
+                foreach (var file3 in di2.GetFiles())
+                {
+                    file3.Delete();
+                }
+
+                string imageName = file.FileName;
+
+                using (Db db = new Db())
+                {
+                    ProductDTO dto = db.Products.Find(id);
+                    dto.ImageName = imageName;
+
+                    db.SaveChanges();
+                }
+                // пути оригинальное и уменьшенное изображение
+                var path = string.Format($"{pathString1}\\{imageName}");
+                var path2 = string.Format($"{pathString2}\\{imageName}");
+
+                file.SaveAs(path);
+
+                WebImage img = new WebImage(file.InputStream);
+                img.Resize(200, 200);
+                img.Save(path2);
+            }
+            #endregion
+
+            return RedirectToAction("EditProduct");
+        }
+
+
     }
 }

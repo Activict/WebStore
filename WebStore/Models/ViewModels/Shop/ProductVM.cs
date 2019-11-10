@@ -35,6 +35,7 @@ namespace WebStore.Models.ViewModels.Shop
         [Required]
         [DisplayName("Category")]
         public int CategoryId { get; set; }
+        [DisplayName("Image")]
         public string ImageName { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }
