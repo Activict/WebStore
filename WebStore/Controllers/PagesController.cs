@@ -64,5 +64,19 @@ namespace WebStore.Controllers
 
             return PartialView("_PagesMenuPartial", pageVMList);
         }
+
+        public ActionResult SidebarPartial()
+        {
+            SidebarVM model;
+
+            using (Db db = new Db())
+            {
+                SidebarDTO dto = db.Sidebars.Find(1);
+
+                model = new SidebarVM(dto);
+            }
+
+            return PartialView("_SidebarPartial", model);
+        }
     }
 }

@@ -23,16 +23,22 @@
         </div>
     </nav>
 
-    <div class="row">
-        <div class="container body-content">
+
+    <div class="container body-content">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-3 list-group">
+                @Html.Action("CategoryMenuPartial", "Shop")
+            </div>
+
             @if (ViewBag.Sidebar == "Yes")
             {
                 <div class="col">
                     @RenderBody()
                 </div>
 
-                <div class="col-xl-12 col-md-3">
-
+                <div class="col-sm-12 col-md-3">
+                    @Html.Action("SidebarPartial", "Pages")
                 </div>
             }
             else
@@ -42,12 +48,12 @@
                 </div>
             }
         </div>
-    </div>
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Test shop</p>
-    </footer>
 
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Test shop</p>
+        </footer>
+    </div>
 
 
     @Scripts.Render("~/bundles/jquery")

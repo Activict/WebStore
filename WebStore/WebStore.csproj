@@ -140,6 +140,7 @@
     <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -914,6 +915,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Pages\Index.cshtml" />
     <Content Include="Views\Pages\_PagesMenuPartial.cshtml" />
+    <Content Include="Views\Pages\_SidebarPartial.cshtml" />
+    <Content Include="Views\Shop\_CategoryMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
