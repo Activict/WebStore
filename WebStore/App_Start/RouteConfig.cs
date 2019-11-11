@@ -13,11 +13,20 @@ namespace WebStore
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
+
+            routes.MapRoute("PagesMenuPartial", "Pages/PagesMenuPartial", new { controller = "Pages", action = "PagesMenuPartial" },
+                new[] { "WebStore.Controllers" });
+
+            routes.MapRoute("Pages", "{page}", new { controller = "Pages", action = "Index" }, 
+                new[] { "WebStore.Controllers" });
+
+            routes.MapRoute("Default", "", new { controller = "Pages", action = "Index" },
+                new[] { "WebStore.Controllers" });
         }
     }
 }
