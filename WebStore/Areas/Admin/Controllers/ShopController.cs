@@ -331,6 +331,7 @@ namespace WebStore.Areas.Admin.Controllers
 
                 CategoryDTO catDTO = db.Categories.FirstOrDefault(m => m.Id == model.CategoryId);
                 dto.Category = catDTO;
+                dto.CategoryName = catDTO.Name;
 
                 db.SaveChanges();
             }
