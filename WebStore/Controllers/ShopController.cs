@@ -41,20 +41,19 @@ namespace WebStore.Controllers
 
                 productVMList = db.Products.ToArray().Where(m => m.CategoryId == catId).Select(m => new ProductVM(m)).ToList();
 
+                ViewBag.CategoryName = categoryDTO.Slug;
 
-                var productCat = db.Products.Where(m => m.CategoryId == catId).FirstOrDefault();
+                //var productCat = db.Products.Where(m => m.CategoryId == catId).FirstOrDefault();
 
-                if (productCat == null)
-                {
-                    var catName = db.Categories.Where(m => m.Slug == name).Select(m => m.Name).FirstOrDefault();
-                    ViewBag.CategoryName2 = categoryDTO.Slug;
-                    ViewBag.CategoryName = catName;
-                }
-                else
-                {
-                    ViewBag.CategoryName = productCat.CategoryName;
-                    ViewBag.CategoryName2 = categoryDTO.Slug;
-                }
+                //if (productCat == null)
+                //{
+                //    var catName = db.Categories.Where(m => m.Slug == name).Select(m => m.Name).FirstOrDefault();
+                //    ViewBag.CategoryName = catName;
+                //}
+                //else
+                //{
+                //    ViewBag.CategoryName = productCat.CategoryName;
+                //}
             }
 
             return View(productVMList);
