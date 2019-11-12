@@ -193,6 +193,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\ShopJs\AddProductJs.js" />
     <Content Include="Content\ShopJs\CategoriesViewJs.js" />
+    <Content Include="Content\ShopJs\IncrementProductScript.js" />
     <Content Include="Content\ShopJs\PagesIndexViewJs.js" />
     <Content Include="Content\ShopJs\ProductDetailScript.js" />
     <Content Include="Content\ShopJs\ProductsScript.js" />
@@ -940,6 +941,7 @@
     <Content Include="Views\Shop\ProductDetails.cshtml" />
     <Content Include="Views\Cart\_CartPartial.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\_AddToCartPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />

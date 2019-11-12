@@ -48,6 +48,9 @@ namespace WebStore.Controllers
                     qty += item.Quantity;
                     price += item.Price * item.Quantity;
                 }
+
+                model.Quantity = qty;
+                model.Price = price;
             }
             else
             {
@@ -56,6 +59,67 @@ namespace WebStore.Controllers
             }
 
             return PartialView("_CartPartial", model);
+        }
+
+        public ActionResult AddToCartPartial(int id)
+        {
+            List<CartVM> cart = Session["cart"] as List<CartVM> ?? new List<CartVM>();
+
+            CartVM model = new CartVM();
+
+            using (Db db = new Db())
+            {
+                ProductDTO product = db.Products.Find(id);
+
+                var productInCart = cart.FirstOrDefault(m => m.ProductId == id);
+
+                if (productInCart == null)
+                {
+                    cart.Add(new CartVM()
+                    {
+                        ProductId = product.Id,
+                        ProductName = product.Name,
+                        Quantity = 1,
+                        Price = product.Price,
+                        Image = product.ImageName
+                    });
+                }
+                else
+                {
+                    productInCart.Quantity++;
+                }
+            }
+            int qty = 0;
+            decimal price = 0m;
+
+            foreach (var item in cart)
+            {
+                qty += item.Quantity;
+                price += item.Price * item.Quantity;
+            }
+
+            model.Quantity = qty;
+            model.Price = price;
+
+            Session["cart"] = cart;
+
+            return PartialView("_AddToCartPartial", model);
+        }
+
+        public JsonResult IncrementProduct(int productId)
+        {
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            using (Db db = new Db())
+            {
+                CartVM model = cart.FirstOrDefault(m => m.ProductId == productId);
+
+                model.Quantity++;
+
+                var result = new { qty = model.Quantity, price = model.Price };
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
