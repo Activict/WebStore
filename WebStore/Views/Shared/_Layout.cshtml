@@ -19,12 +19,14 @@
                 @Html.Action("PagesMenuPartial", "Pages")
 
             </ul>
-
+            <span class="navbar-text">
+                @Html.Action("CartPartial", "Cart")
+            </span>
         </div>
     </nav>
 
 
-    <div class="container body-content">
+    <div class="container body-content" style="margin-top: 35px">
         <div class="row">
 
             <div class="col-sm-12 col-md-3 list-group">
