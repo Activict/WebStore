@@ -40,11 +40,11 @@
         <div class="row">
             @foreach (var item in Model.GalleryImages)
             {
-                <div class="col">
-                    <a class="fancybox" rel="gallery1" href="/Images/Uploads/Product/@Model.Id/Gallery/@item">
-                        <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@item" />
-                    </a>
-                </div>
+            <div class="col">
+                <a class="fancybox" rel="gallery1" href="/Images/Uploads/Products/@Model.Id/Gallery/@item">
+                    <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@item" />
+                </a>
+            </div>
             }
         </div>
     </div>

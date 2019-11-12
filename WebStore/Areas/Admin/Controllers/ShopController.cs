@@ -441,7 +441,7 @@ namespace WebStore.Areas.Admin.Controllers
                     file.SaveAs(path);
 
                     WebImage img = new WebImage(file.InputStream);
-                    img.Resize(200, 200).Crop(1, 1);
+                    img.Resize(50, 50).Crop(1, 1);
                     img.Save(path2);
                 }
             }
@@ -451,7 +451,7 @@ namespace WebStore.Areas.Admin.Controllers
         public void DeleteImage(int id, string imageName)
         {
             string fullPath1 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/" + imageName);
-            string fullPath2 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/Thumbs" + imageName);
+            string fullPath2 = Request.MapPath("~/Images/Uploads/Products/" + id.ToString() + "/Gallery/Thumbs/" + imageName);
 
             if (System.IO.File.Exists(fullPath1))
             {
