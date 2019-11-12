@@ -28,10 +28,12 @@ namespace WebStore
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/jquery-ui.css"));
+                      "~/Content/jquery-ui.css"
+                      ));
             // CKEditor
             bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
                       "~/Scripts/ckeditor/ckeditor.js"));
+
         }
     }
-}
+    }

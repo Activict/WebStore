@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -57,6 +58,37 @@ namespace WebStore.Controllers
             }
 
             return View(productVMList);
+        }
+
+        // GET: Shop/product-details/name
+        [ActionName("product-details")]
+        public ActionResult ProductDetails(string name)
+        {
+            ProductDTO dto;
+            ProductVM model;
+
+            int id = 0;
+
+            using (Db db = new Db())
+            {
+                if (!db.Products.Any(m => m.Slug.Equals(name)))
+                {
+                    return RedirectToAction("Index", "Shop");
+                }
+                else
+                {
+                    dto = db.Products.Where(m => m.Slug == name).FirstOrDefault();
+                }
+
+                id = dto.Id;
+
+                model = new ProductVM(dto);
+            }
+
+            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                .Select(fn => Path.GetFileName(fn));
+
+            return View("ProductDetails", model);
         }
     }
 }
