@@ -121,5 +121,41 @@ namespace WebStore.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult DecrementProduct(int productId)
+        {
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            using (Db db = new Db())
+            {
+                CartVM model = cart.FirstOrDefault(m => m.ProductId == productId);
+
+                if (model.Quantity > 1)
+                {
+                    model.Quantity--;
+                }
+                else
+                {
+                    model.Quantity = 0;
+                    cart.Remove(model);
+                }
+
+                var result = new { qty = model.Quantity, price = model.Price };
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public void RemoveProduct(int productId)
+        {
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            using (Db db = new Db())
+            {
+                CartVM model = cart.FirstOrDefault(m => m.ProductId == productId);
+
+                cart.Remove(model);
+            }
+        }
     }
 }
