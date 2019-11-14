@@ -57,13 +57,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+               @* @Html.DisplayFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })*@
                 @if (@Model.ImageName != null)
                 {
-                    <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" />
+                    <img src="/Images/Uploads/Products/@Model.Id/@Model.ImageName" />
                 }
-                <br />
-                <img id="imgpreview" src="~/Content/img/no_image.png" />
+                else
+                {
+                    <img id="imgpreview" src="~/Content/img/no_image.png" />
+                }
+                <br /> <br />
                 <div class="col-md-10">
                     <input type="file" name="file" , id="imageUpload" />
                 </div>
@@ -98,7 +101,7 @@
     <div class="col">
         <div class="galleryStyle">
             <div style="width: 200px; height: 200px;">
-                <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@image" />
+                <img src="/Images/Uploads/Products/@Model.Id/Gallery/@image" />
             </div>
             <div style="text-align: center">
                 @Html.ActionLink("Delete", "DeleteImage", "Shop", new { @class = "deleteimage btn btn-danger", data_name = image, style = "margin: 10px" })

@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-5">
-        <img src="/Images/Uploads/Products/@Model.Id/Thumbs/@Model.ImageName" />
+        <img src="/Images/Uploads/Products/@Model.Id/@Model.ImageName" />
     </div>
 
     <div class="col-sm-12 col-md-7">
@@ -33,10 +33,11 @@
 
 <hr />
 <div class="row">
-    <h3>Product Gallery</h3>
-    <div class="col-sm-12 fancyboxdiv">
-        <br />
-        <br />
+    <div class="col-sm-12" >
+        <h5>Product Gallery</h5>
+    </div>
+    
+    <div class="row-sm-12 fancyboxdiv">
         <div class="row">
             @foreach (var item in Model.GalleryImages)
             {

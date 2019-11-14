@@ -28,7 +28,7 @@ else
                 Image
             </th>
             <th>
-
+                                
             </th>
             <th>
                 Total
@@ -47,7 +47,7 @@ else
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price) $
+                    @Html.DisplayFor(modelItem => item.Price)$
                 </td>
                 <td>
                     <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
@@ -55,10 +55,10 @@ else
                 <td>
                     <a href="#" class="incproduct" data-id="@item.ProductId">+</a>
                     <a href="#" class="decproduct" data-id="@item.ProductId">-</a>
-                    <a href="#" class="removeproduct" data-id="@item.ProductId">Remove</a>
+                    <a href="#" class="removeproduct" data-id="@item.ProductId">del</a>
                 </td>
                 <td class="total@(item.ProductId)">
-                    @Html.DisplayFor(modelItem => item.Total) $
+                    @Html.DisplayFor(modelItem => item.Total)$
                 </td>
             </tr>
         }

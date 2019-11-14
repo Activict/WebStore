@@ -230,10 +230,12 @@ namespace WebStore.Areas.Admin.Controllers
                 var path = string.Format($"{pathString2}\\{imageName}");
                 var path2 = string.Format($"{pathString3}\\{imageName}");
 
-                file.SaveAs(path);
+                //file.SaveAs(path);
 
                 WebImage img = new WebImage(file.InputStream);
                 img.Resize(200, 200).Crop(1, 1);
+                img.Save(path);
+                img.Resize(50, 50).Crop(1, 1);
                 img.Save(path2);
             }
             #endregion
@@ -386,10 +388,12 @@ namespace WebStore.Areas.Admin.Controllers
                 var path = string.Format($"{pathString1}\\{imageName}");
                 var path2 = string.Format($"{pathString2}\\{imageName}");
 
-                file.SaveAs(path);
+                //file.SaveAs(path);
 
                 WebImage img = new WebImage(file.InputStream);
                 img.Resize(200, 200).Crop(1, 1);
+                img.Save(path);
+                img.Resize(50, 50).Crop(1, 1);
                 img.Save(path2);
             }
             #endregion
@@ -438,9 +442,11 @@ namespace WebStore.Areas.Admin.Controllers
                     var path = string.Format($"{pathString1}\\{file.FileName}");
                     var path2 = string.Format($"{pathString2}\\{file.FileName}");
 
-                    file.SaveAs(path);
+                    //file.SaveAs(path);
 
                     WebImage img = new WebImage(file.InputStream);
+                    img.Resize(200, 200).Crop(1, 1);
+                    img.Save(path);
                     img.Resize(50, 50).Crop(1, 1);
                     img.Save(path2);
                 }
